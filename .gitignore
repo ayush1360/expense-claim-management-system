@@ -1,0 +1,17 @@
+# IntelliJ IDEA
+.idea/
+*.iml
+
+# macOS
+.DS_Store
+
+# Maven
+**/target/
+
+# Angular / Node
+**/node_modules/
+**/dist/
+
+# Environment variables
+.env
+.env.*
