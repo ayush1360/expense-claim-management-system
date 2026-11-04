@@ -1,0 +1,264 @@
+:host {
+  display: block;
+  min-height: 100vh;
+  background: #f4f6fc;
+  color: #1d2945;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.employee-dashboard {
+  max-width: 1250px;
+  margin: auto;
+  padding: 38px 30px 60px;
+}
+
+.dashboard-header,
+.header-actions,
+.section-heading,
+.quick-action-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.dashboard-header {
+  margin-bottom: 28px;
+}
+
+.eyebrow {
+  color: #2860f5;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+}
+
+h1 {
+  font-size: 30px;
+  margin: 8px 0;
+}
+
+h2 {
+  font-size: 19px;
+  margin: 0 0 8px;
+}
+
+p {
+  color: #7d8ba8;
+  font-size: 13px;
+  margin: 0;
+}
+
+.btn {
+  padding: 11px 16px;
+  border: 1px solid #dce3f0;
+  border-radius: 9px;
+  background: white;
+  color: #263653;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 650;
+}
+
+.btn-primary {
+  background: #2860f5;
+  border-color: #2860f5;
+  color: white;
+}
+
+.btn-dark {
+  background: #1d2945;
+  border-color: #1d2945;
+  color: white;
+}
+
+.btn-light {
+  background: white;
+  color: #2860f5;
+  border-color: white;
+}
+
+.welcome-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 28px;
+  margin-bottom: 23px;
+  border-radius: 14px;
+  background: linear-gradient(120deg, #2458e8, #527cf4);
+  color: white;
+}
+
+.welcome-card span {
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  font-weight: 800;
+  opacity: .8;
+}
+
+.welcome-card h2 {
+  font-size: 23px;
+  margin: 10px 0;
+}
+
+.welcome-card p {
+  color: #e3eaff;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 23px;
+}
+
+.stat-card,
+.content-card,
+.quick-action-card {
+  background: white;
+  border: 1px solid #e6eaf2;
+  border-radius: 13px;
+}
+
+.stat-card {
+  padding: 21px;
+}
+
+.stat-icon {
+  width: 37px;
+  height: 37px;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  font-weight: 800;
+  margin-bottom: 17px;
+}
+
+.blue { background: #edf2ff; color: #2860f5; }
+.orange { background: #fff3df; color: #b87500; }
+.green { background: #e5f7ed; color: #16834b; }
+.red { background: #ffebeb; color: #d63c3c; }
+
+.stat-card span,
+.stat-card strong,
+.stat-card small {
+  display: block;
+}
+
+.stat-card span {
+  color: #7d8ba8;
+  font-size: 12px;
+  margin-bottom: 9px;
+}
+
+.stat-card strong {
+  font-size: 22px;
+  overflow-wrap: anywhere;
+}
+
+.stat-card small {
+  color: #8995ad;
+  margin-top: 9px;
+  font-size: 11px;
+}
+
+.content-card {
+  padding: 25px;
+  margin-bottom: 22px;
+}
+
+.section-heading {
+  margin-bottom: 25px;
+}
+
+.status-row {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 0 9px;
+  color: #52617d;
+  font-size: 13px;
+}
+
+.status-row strong {
+  color: #1d2945;
+}
+
+.progress-track {
+  height: 9px;
+  background: #edf0f6;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.progress {
+  height: 100%;
+  border-radius: 20px;
+  transition: width .3s ease;
+}
+
+.pending-progress { background: #e8a332; }
+.approved-progress { background: #28a568; }
+.rejected-progress { background: #e45a5a; }
+
+.quick-action-card {
+  padding: 23px 25px;
+}
+
+.quick-action-card h2 {
+  margin-bottom: 7px;
+}
+
+.error-message {
+  padding: 13px;
+  margin-bottom: 18px;
+  border-radius: 9px;
+  background: #fff0f0;
+  color: #d63c3c;
+  font-size: 13px;
+}
+
+.loading-state {
+  padding: 60px;
+  text-align: center;
+  color: #7d8ba8;
+}
+
+@media (max-width: 900px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .employee-dashboard {
+    padding: 22px 14px 40px;
+  }
+
+  .dashboard-header,
+  .welcome-card,
+  .quick-action-card {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .stats-grid {
+    gap: 10px;
+  }
+
+  .stat-card {
+    padding: 15px;
+  }
+
+  .stat-card strong {
+    font-size: 18px;
+  }
+
+  .content-card {
+    padding: 17px;
+  }
+}

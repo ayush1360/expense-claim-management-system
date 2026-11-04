@@ -1,0 +1,249 @@
+<div class="dashboard">
+
+  <!-- Header -->
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-icon">E</div>
+      <div>
+        <h2>ExpenseFlow</h2>
+        <span>Management Portal</span>
+      </div>
+    </div>
+
+    <div class="header-right">
+      <span class="role-label">MANAGER</span>
+      <button class="logout-btn" (click)="logout()">
+        Logout ↗
+      </button>
+    </div>
+  </header>
+
+  <main class="main-content">
+
+    <!-- Heading -->
+    <section class="welcome">
+      <div>
+        <span class="eyebrow">OVERVIEW</span>
+        <h1>Manager Dashboard</h1>
+        <p>Monitor and manage employee expense claims.</p>
+      </div>
+
+      <button
+        class="refresh-btn"
+        (click)="loadDashboard()"
+        [disabled]="loading">
+        ↻ {{ loading ? 'Loading...' : 'Refresh' }}
+      </button>
+    </section>
+
+    <!-- Loading -->
+    <div class="loading" *ngIf="loading">
+      <span class="spinner"></span>
+      Loading dashboard data...
+    </div>
+
+    <!-- Error -->
+    <div class="error" *ngIf="!loading && errorMessage">
+      <div>
+        <strong>Unable to load dashboard</strong>
+        <p>{{ errorMessage }}</p>
+      </div>
+      <button (click)="loadDashboard()">Try Again</button>
+    </div>
+
+    <ng-container *ngIf="!loading && dashboard as data">
+
+      <!-- KPI Cards -->
+      <section class="stats-grid">
+
+        <article class="stat-card total">
+          <div class="stat-top">
+            <span>Total Claims</span>
+            <span class="stat-icon">▤</span>
+          </div>
+          <h2>{{ data.totalClaims }}</h2>
+          <p>All submitted claims</p>
+        </article>
+
+        <article class="stat-card pending">
+          <div class="stat-top">
+            <span>Pending Review</span>
+            <span class="stat-icon">◷</span>
+          </div>
+          <h2>{{ data.pendingClaims }}</h2>
+          <p>Awaiting your decision</p>
+        </article>
+
+        <article class="stat-card approved">
+          <div class="stat-top">
+            <span>Approved</span>
+            <span class="stat-icon">✓</span>
+          </div>
+          <h2>{{ data.approvedClaims }}</h2>
+          <p>Successfully approved</p>
+        </article>
+
+        <article class="stat-card rejected">
+          <div class="stat-top">
+            <span>Rejected</span>
+            <span class="stat-icon">✕</span>
+          </div>
+          <h2>{{ data.rejectedClaims }}</h2>
+          <p>Rejected expense claims</p>
+        </article>
+
+      </section>
+
+      <!-- Status and Actions -->
+      <section class="content-grid">
+
+        <article class="panel">
+          <div class="panel-heading">
+            <div>
+              <h3>Claim Status Overview</h3>
+              <p>Distribution of submitted claims</p>
+            </div>
+          </div>
+
+          <div class="status-row">
+            <span>Pending</span>
+            <strong>{{ data.pendingClaims }}</strong>
+          </div>
+          <div class="progress-track">
+            <div
+              class="progress pending-bar"
+              [style.width.%]="data.totalClaims
+                ? data.pendingClaims / data.totalClaims * 100 : 0">
+            </div>
+          </div>
+
+          <div class="status-row">
+            <span>Approved</span>
+            <strong>{{ data.approvedClaims }}</strong>
+          </div>
+          <div class="progress-track">
+            <div
+              class="progress approved-bar"
+              [style.width.%]="data.totalClaims
+                ? data.approvedClaims / data.totalClaims * 100 : 0">
+            </div>
+          </div>
+
+          <div class="status-row">
+            <span>Rejected</span>
+            <strong>{{ data.rejectedClaims }}</strong>
+          </div>
+          <div class="progress-track">
+            <div
+              class="progress rejected-bar"
+              [style.width.%]="data.totalClaims
+                ? data.rejectedClaims / data.totalClaims * 100 : 0">
+            </div>
+          </div>
+        </article>
+
+        <article class="panel action-panel">
+          <h3>Quick Actions</h3>
+          <p>Manage employee expenses</p>
+
+          <button
+            class="action-btn"
+            (click)="router.navigate(['/manager/claims'])">
+            <span class="action-icon">▤</span>
+            <span class="action-text">
+              <strong>Review Claims</strong>
+              <small>View and process submissions</small>
+            </span>
+            <span class="arrow">→</span>
+          </button>
+
+          <button
+            class="action-btn"
+            (click)="router.navigate(['/manager/users'])">
+            <span class="action-icon">♙</span>
+            <span class="action-text">
+              <strong>Manage Employees</strong>
+              <small>View and manage user accounts</small>
+            </span>
+            <span class="arrow">→</span>
+          </button>
+        </article>
+
+      </section>
+
+      <!-- Category Summary -->
+      <section class="panel summary-panel">
+
+        <div class="panel-heading">
+          <div>
+            <h3>Expenses by Category</h3>
+            <p>Category-wise claim distribution</p>
+          </div>
+        </div>
+
+        <div class="empty-state"
+             *ngIf="!data.categorySummaries?.length">
+          No category data available yet.
+        </div>
+
+        <div class="summary-table"
+             *ngIf="data.categorySummaries?.length">
+
+          <div class="summary-row summary-header">
+            <span>Category</span>
+            <span>Claims</span>
+            <span>Total Amount</span>
+          </div>
+
+          <div class="summary-row"
+               *ngFor="let category of data.categorySummaries">
+            <span class="category-name">{{ category.category }}</span>
+            <span>{{ category.claimCount }}</span>
+            <strong>
+              {{ category.totalAmount | currency:'INR':'symbol':'1.2-2' }}
+            </strong>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Monthly Summary -->
+      <section class="panel summary-panel">
+
+        <div class="panel-heading">
+          <div>
+            <h3>Monthly Expense Summary</h3>
+            <p>Monthly claim and expense overview</p>
+          </div>
+        </div>
+
+        <div class="empty-state"
+             *ngIf="!data.monthlySummaries?.length">
+          No monthly data available yet.
+        </div>
+
+        <div class="summary-table"
+             *ngIf="data.monthlySummaries?.length">
+
+          <div class="summary-row summary-header">
+            <span>Month</span>
+            <span>Claims</span>
+            <span>Total Amount</span>
+          </div>
+
+          <div class="summary-row"
+               *ngFor="let month of data.monthlySummaries">
+            <span class="category-name">{{ month.month }}</span>
+            <span>{{ month.claimCount }}</span>
+            <strong>
+              {{ month.totalAmount | currency:'INR':'symbol':'1.2-2' }}
+            </strong>
+          </div>
+
+        </div>
+      </section>
+
+    </ng-container>
+
+  </main>
+</div>

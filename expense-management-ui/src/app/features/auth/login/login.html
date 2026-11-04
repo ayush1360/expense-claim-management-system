@@ -1,0 +1,100 @@
+<div class="login-page">
+  <div class="login-container">
+
+    <section class="brand-panel">
+      <div class="brand-content">
+        <div class="brand-logo">E</div>
+        <h1>ExpenseFlow</h1>
+        <p class="brand-tagline">Expense management, simplified.</p>
+
+        <div class="brand-message">
+          <h2>Manage expenses.<br>Stay in control.</h2>
+          <p>Submit, track and review expense claims with one simple platform.</p>
+        </div>
+
+        <div class="brand-footer">Smart workflows. Clear decisions.</div>
+      </div>
+    </section>
+
+    <section class="form-panel">
+      <div class="form-content">
+
+        <div class="mobile-brand">
+          <div class="brand-logo">E</div>
+          <span>ExpenseFlow</span>
+        </div>
+
+        <div class="welcome-text">
+          <span class="eyebrow">WELCOME BACK</span>
+          <h2>Sign in to your account</h2>
+          <p>Enter your credentials to access your workspace.</p>
+        </div>
+
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+          <div class="form-group">
+            <label for="email">Email address</label>
+            <input
+              id="email"
+              type="email"
+              formControlName="email"
+              placeholder="you@company.com"
+              autocomplete="username"
+            />
+
+            <small class="field-error"
+              *ngIf="loginForm.controls.email.touched && loginForm.controls.email.invalid">
+              Please enter a valid email address.
+            </small>
+          </div>
+
+          <div class="form-group">
+            <div class="label-row">
+              <label for="password">Password</label>
+            </div>
+
+            <div class="password-wrapper">
+              <input
+                id="password"
+                [type]="showPassword ? 'text' : 'password'"
+                formControlName="password"
+                placeholder="Enter your password"
+                autocomplete="current-password"
+              />
+              <button
+                type="button"
+                class="password-toggle"
+                (click)="showPassword = !showPassword">
+                {{ showPassword ? 'Hide' : 'Show' }}
+              </button>
+            </div>
+
+            <small class="field-error"
+              *ngIf="loginForm.controls.password.touched && loginForm.controls.password.invalid">
+              Password is required.
+            </small>
+          </div>
+
+          <div class="error-message" *ngIf="errorMessage">
+            {{ errorMessage }}
+          </div>
+
+          <button class="login-button" type="submit" [disabled]="loading">
+            {{ loading ? 'Signing in...' : 'Sign in to workspace' }}
+            <span *ngIf="!loading">→</span>
+          </button>
+
+        </form>
+
+        <div class="security-note">
+          <span>🔒</span>
+          Your account is protected with secure authentication.
+        </div>
+
+        <p class="copyright">© 2026 ExpenseFlow. All rights reserved.</p>
+
+      </div>
+    </section>
+
+  </div>
+</div>

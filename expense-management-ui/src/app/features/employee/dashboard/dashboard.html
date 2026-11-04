@@ -1,0 +1,131 @@
+
+<div class="employee-dashboard">
+
+  <header class="dashboard-header">
+    <div>
+      <span class="eyebrow">EMPLOYEE PORTAL</span>
+      <h1>My Dashboard</h1>
+      <p>Track your expenses and reimbursement requests.</p>
+    </div>
+
+    <div class="header-actions">
+      <button class="btn btn-outline" (click)="loadDashboard()">
+        ↻ Refresh
+      </button>
+      <button class="btn btn-dark" (click)="logout()">
+        Logout
+      </button>
+    </div>
+  </header>
+
+  <div class="error-message" *ngIf="errorMessage">
+    {{ errorMessage }}
+  </div>
+
+  <div class="loading-state" *ngIf="loading">
+    Loading your dashboard...
+  </div>
+
+  <ng-container *ngIf="!loading">
+
+    <section class="welcome-card">
+      <div>
+        <span>EXPENSE OVERVIEW</span>
+        <h2>Your reimbursement at a glance</h2>
+        <p>Monitor submitted claims and their current status.</p>
+      </div>
+
+      <button class="btn btn-light" (click)="goToClaims()">
+        Manage My Claims →
+      </button>
+    </section>
+
+    <section class="stats-grid">
+
+      <div class="stat-card">
+        <div class="stat-icon blue">₹</div>
+        <span>Total Claimed</span>
+        <strong>{{ dashboard.totalClaimedAmount | currency:'INR':'symbol':'1.0-2' }}</strong>
+        <small>{{ dashboard.totalClaims }} submitted claims</small>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon orange">◷</div>
+        <span>Pending Amount</span>
+        <strong>{{ dashboard.pendingAmount | currency:'INR':'symbol':'1.0-2' }}</strong>
+        <small>{{ dashboard.pendingClaims }} awaiting review</small>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon green">✓</div>
+        <span>Approved Amount</span>
+        <strong>{{ dashboard.approvedAmount | currency:'INR':'symbol':'1.0-2' }}</strong>
+        <small>{{ dashboard.approvedClaims }} approved claims</small>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon red">!</div>
+        <span>Rejected Amount</span>
+        <strong>{{ dashboard.rejectedAmount | currency:'INR':'symbol':'1.0-2' }}</strong>
+        <small>{{ dashboard.rejectedClaims }} rejected claims</small>
+      </div>
+
+    </section>
+
+    <section class="content-card">
+
+      <div class="section-heading">
+        <div>
+          <h2>Claim Status Overview</h2>
+          <p>Breakdown of your submitted expenses.</p>
+        </div>
+      </div>
+
+      <div class="status-row">
+        <span>Pending</span>
+        <strong>{{ dashboard.pendingClaims }}</strong>
+      </div>
+
+      <div class="progress-track">
+        <div class="progress pending-progress"
+          [style.width.%]="dashboard.totalClaims ? dashboard.pendingClaims / dashboard.totalClaims * 100 : 0">
+        </div>
+      </div>
+
+      <div class="status-row">
+        <span>Approved</span>
+        <strong>{{ dashboard.approvedClaims }}</strong>
+      </div>
+
+      <div class="progress-track">
+        <div class="progress approved-progress"
+          [style.width.%]="dashboard.totalClaims ? dashboard.approvedClaims / dashboard.totalClaims * 100 : 0">
+        </div>
+      </div>
+
+      <div class="status-row">
+        <span>Rejected</span>
+        <strong>{{ dashboard.rejectedClaims }}</strong>
+      </div>
+
+      <div class="progress-track">
+        <div class="progress rejected-progress"
+          [style.width.%]="dashboard.totalClaims ? dashboard.rejectedClaims / dashboard.totalClaims * 100 : 0">
+        </div>
+      </div>
+
+    </section>
+
+    <section class="quick-action-card">
+      <div>
+        <h2>Have a new expense?</h2>
+        <p>Submit a reimbursement request with your receipt.</p>
+      </div>
+
+      <button class="btn btn-primary" (click)="goToClaims()">
+        + Create Expense Claim
+      </button>
+    </section>
+
+  </ng-container>
+</div>
